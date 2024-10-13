@@ -28,5 +28,11 @@
         "precio": 45000,
         "talles": ["S", "M", "L", "XL"],
         "imagen": "img/Boca 98.jpeg"
+    },
+    {
+        "nombre": "Manchester 03",
+        "precio": 45000,
+        "talles": ["S", "M", "L", "XL"],
+        "imagen": "img/Manchester 03.jpg"
     }
 ]
