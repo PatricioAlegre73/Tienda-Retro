@@ -1,0 +1,32 @@
+[
+    {
+        "nombre": "Milan 98",
+        "precio": 40000,
+        "talles": ["S", "M", "L", "XL"],
+        "imagen": "img/Milan 98.jpeg"
+    },
+    {
+        "nombre": "Real Madrid 02",
+        "precio": 50000,
+        "talles": ["S", "M", "L", "XL"],
+        "imagen": "img/Real 02.jpg"
+    },
+    {
+        "nombre": "Barcelona 11",
+        "precio": 45000,
+        "talles": ["S", "M", "L", "XL"],
+        "imagen": "img/Barsa 2011.jpg"
+    },
+    {
+        "nombre": "Lazio 22",
+        "precio": 30000,
+        "talles": ["S", "M", "L", "XL"],
+        "imagen": "img/Lazio 22.jpg"
+    },
+    {
+        "nombre": "Boca 98",
+        "precio": 45000,
+        "talles": ["S", "M", "L", "XL"],
+        "imagen": "img/Boca 98.jpeg"
+    }
+]

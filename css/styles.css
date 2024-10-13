@@ -1,0 +1,101 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+h1 {
+    background-color: #6e6c6c;
+    color: yellow;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: yellow;
+    margin-top: 20px;
+}
+
+/* Contenedor de camisetas */
+#camisetasContainer, #carritoContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+#camisetasContainer > div, #carritoContainer > div {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin: 10px;
+    padding: 20px;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+#camisetasContainer > div:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+button {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+select {
+    padding: 5px;
+    margin: 5px 0;
+}
+
+/* Botón de finalizar compra */
+#finalizarCompra {
+    background-color: yellow;
+    margin: 20px;
+}
+
+#finalizarCompra:hover {
+    background-color: #d4b600;
+}
+
+/* Sección de nombre del usuario */
+#nombreUsuario {
+    margin: 20px;
+}
+
+#nombreInput {
+    padding: 10px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#btnSaludar {
+    background-color: yellow;
+    margin-left: 10px;
+}
+
+#btnSaludar:hover {
+    background-color:#6e6c6c ;
+}
+
+/* Estilos para las imágenes de las camisetas */
+#camisetasContainer img {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
