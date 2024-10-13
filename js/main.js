@@ -51,7 +51,7 @@ function mostrarCamisetas(camisetas) {
         let camisetaDiv = document.createElement('div');
         camisetaDiv.innerHTML = `
             <h3>${nombre}</h3>
-            <img src="${imagen}" alt="${nombre}" style="width:100px; height:auto;"> <!-- Muestra la imagen -->
+            <img src="${imagen}" alt="${nombre}" id="imagen-${index}" style="cursor:pointer; width:100px; height:auto;"> <!-- Muestra la imagen con cursor de puntero -->
             <p>Precio: $${precio}</p>
             <label for="talle-${index}">Elige tu talle:</label>
             <select id="talle-${index}">
@@ -61,9 +61,20 @@ function mostrarCamisetas(camisetas) {
         `;
         camisetasContainer.appendChild(camisetaDiv);
 
+        // Evento para comprar la camiseta
         document.getElementById(`comprar-${index}`).addEventListener('click', () => {
             let talleSeleccionado = document.getElementById(`talle-${index}`).value;
             agregarAlCarrito({ nombre, precio, imagen }, talleSeleccionado); // Agrega 'imagen' al carrito
+        });
+
+        // Evento para mostrar la imagen en grande usando Swal.fire
+        document.getElementById(`imagen-${index}`).addEventListener('click', () => {
+            Swal.fire({
+                imageUrl: imagen,
+                imageHeight: 500,  // Cambia el tamaño según lo necesites
+                imageAlt: `Imagen de la camiseta ${nombre}`,
+                title: `${nombre}`,
+            });
         });
     });
 }
@@ -73,8 +84,17 @@ function agregarAlCarrito(camiseta, talle) {
     const precioConIVA = calcularIVA(camiseta.precio, 0.21);
     carrito.push({ nombre: camiseta.nombre, precio: precioConIVA, talle, imagen: camiseta.imagen }); // Agrega 'imagen'
     localStorage.setItem('carrito', JSON.stringify(carrito));
-    mostrarMensaje(`Camiseta ${camiseta.nombre} (Talle: ${talle}) agregada al carrito`, "green");
-    mostrarCarrito();
+    
+    // Mostrar notificación con SweetAlert2
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: `Camiseta ${camiseta.nombre} agregada al carrito`,
+        showConfirmButton: false,
+        timer: 1500
+    });
+
+    mostrarCarrito();  // Actualizar la visualización del carrito
 }
 
 // Mostrar el carrito en la página
@@ -109,7 +129,7 @@ function mostrarCarrito() {
     }
 }
 
-// Eliminar un artículo del carrito
+// Eliminar un artículo del carrito con confirmación
 function eliminarDelCarrito(index) {
     // Convertir el índice a número
     const itemIndex = parseInt(index, 10);
@@ -120,14 +140,35 @@ function eliminarDelCarrito(index) {
         return;
     }
 
-    // Eliminar el producto seleccionado del carrito
-    carrito.splice(itemIndex, 1);
+    // Mostrar alerta de confirmación con SweetAlert2
+    Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¡No podrás revertir esta acción!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, eliminarlo",
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Si el usuario confirma, eliminar el producto del carrito
+            carrito.splice(itemIndex, 1);
 
-    // Actualizar el carrito en localStorage
-    localStorage.setItem('carrito', JSON.stringify(carrito));
+            // Actualizar el carrito en localStorage
+            localStorage.setItem('carrito', JSON.stringify(carrito));
 
-    // Mostrar el carrito actualizado
-    mostrarCarrito();
+            // Mostrar el carrito actualizado
+            mostrarCarrito();
+
+            // Mostrar notificación de éxito
+            Swal.fire({
+                title: "¡Eliminado!",
+                text: "La camiseta ha sido eliminada del carrito.",
+                icon: "success"
+            });
+        }
+    });
 }
 
 // Calcular IVA
@@ -138,9 +179,15 @@ function calcularIVA(precio, porcentajeIVA) {
 // Simular finalizar compra
 async function finalizarCompra() {
     if (carrito.length === 0) {
-        mostrarMensaje("El carrito está vacío.", "red");
+        // Mostrar alerta de SweetAlert2 cuando el carrito está vacío
+        await Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "El carrito está vacío. No puedes finalizar la compra.",
+            
+        });
     } else {
-        // Mostrar alerta de SweetAlert2
+        // Mostrar alerta de éxito cuando hay artículos en el carrito
         await Swal.fire({
             title: "¡Gracias por tu compra!",
             text: "Tu pedido ha sido procesado con éxito.",
@@ -160,4 +207,5 @@ finalizarCompraBtn.addEventListener('click', finalizarCompra);
 // Inicializar la página
 cargarCamisetas();  // Cargar camisetas desde JSON
 mostrarCarrito();   // Mostrar el carrito al iniciar
+
 
